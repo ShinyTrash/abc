@@ -2,8 +2,6 @@
 
 A go package for Windows 10 toast notifications.
 
-As seen in [jacobmarshall/pokevision-cli](https://github.com/jacobmarshall/pokevision-cli).
-
 ## CLI
 
 As well as using go-toast within your Go projects, you can also utilise the CLI - for any of your projects.
