@@ -2,6 +2,8 @@
 
 A go package for Windows 10 toast notifications.
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/ShinyTrash/go-toast.svg)](https://pkg.go.dev/github.com/ShinyTrash/go-toast)
+
 ## CLI
 
 As well as using go-toast within your Go projects, you can also utilise the CLI - for any of your projects.
