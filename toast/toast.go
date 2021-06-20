@@ -237,11 +237,10 @@ type Notification struct {
 //
 //     toast.Action{"protocol", "Open Maps", "bingmaps:?q=sushi"}
 type Action struct {
-	Type      	   string
-	Label     	   string
-	Arguments 	   string
-	Content        string
-	HintInputId    string
+	Type        string
+	Label       string
+	Arguments   string
+	HintInputId string
 }
 
 // ProgressBar
@@ -251,9 +250,9 @@ type Action struct {
 //
 //     toast.ProgressBar{"Weekly playlist", 0.6, "Downloading", "15/26 songs"}
 type ProgressBar struct {
-	Title string
-	Value float32
-	Status string
+	Title               string
+	Value               float32
+	Status              string
 	ValueStringOverride string
 }
 
@@ -264,22 +263,21 @@ type ProgressBar struct {
 //
 //     toast.Header{"42", "This is a header", "bingmaps:?q=sushi"}
 type Header struct {
-	Id   	  string
+	Id        string
 	Title     string
 	Arguments string
 }
 type Input struct {
 	Id           string
-	Type 		 string
+	Type         string
 	DefaultInput string
 	Selections   []Selection
 }
 
 type Selection struct {
-	Id string
+	Id      string
 	Content string
 }
-
 
 func (n *Notification) applyDefaults() {
 	if n.ActivationType == "" {

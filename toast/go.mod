@@ -1,4 +1,4 @@
-module ShinyTrash/go-toast
+module Shinyhero36/go-toast
 
 go 1.16
 
