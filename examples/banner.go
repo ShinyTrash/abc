@@ -18,8 +18,8 @@ func main() {
 		Message: "Some message about how important something is...",
 		Icon:    sonic, // This file must exist (remove this line if it doesn't)
 		Actions: []toast.Action{
-			{"protocol", "Button 1", "", "", ""},
-			{"protocol", "Button 2", "", "", ""},
+			{"protocol", "Button 1", "", ""},
+			{"protocol", "Button 2", "", ""},
 		},
 		Banner: banner,
 	}
