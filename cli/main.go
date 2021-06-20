@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"gopkg.in/toast.v1"
+	"../toast"
 	"gopkg.in/urfave/cli.v1"
 )
 
@@ -18,8 +18,8 @@ func main() {
 	app.Compiled = time.Now()
 	app.Authors = []cli.Author{
 		cli.Author{
-			Name:  "Jacob Marshall",
-			Email: "go-toast@jacobmarshall.co",
+			Name:  "Shinyhero36",
+			Email: "gerald.leban0@gmail.com",
 		},
 	}
 
@@ -41,6 +41,14 @@ func main() {
 			Usage: "the app icon path (displays to the left of the toast)",
 		},
 		cli.StringFlag{
+			Name:  "banner, b",
+			Usage: "the banner image path (displays to the top of the toast)",
+		},
+		cli.StringFlag{
+			Name:  "image",
+			Usage: "the image to display within the toast",
+		},
+		cli.StringFlag{
 			Name:  "activation-type",
 			Value: "protocol",
 			Usage: "the type of action to invoke when the user clicks the toast",
@@ -58,8 +66,16 @@ func main() {
 			Usage: "the type of action button",
 		},
 		cli.StringSliceFlag{
+			Name:  "content",
+			Usage: "the action button argument",
+		},
+		cli.StringSliceFlag{
 			Name:  "action-arg",
 			Usage: "the action button argument",
+		},
+		cli.StringSliceFlag{
+			Name:  "hint-input-id",
+			Usage: "the if of the input",
 		},
 		cli.StringFlag{
 			Name:  "audio",
@@ -75,6 +91,10 @@ func main() {
 			Value: "short",
 			Usage: "how long the toast should display for",
 		},
+		cli.StringFlag{
+			Name:  "footer",
+			Usage: "footer of the toast",
+		},
 	}
 
 	app.Action = func(c *cli.Context) error {
@@ -82,44 +102,60 @@ func main() {
 		title := c.String("title")
 		message := c.String("message")
 		icon := c.String("icon")
+		banner := c.String("banner")
+		image := c.String("image")
 		activationType := c.String("activation-type")
 		activationArg := c.String("activation-arg")
 		audio, _ := toast.Audio(c.String("audio"))
 		duration, _ := toast.Duration(c.String("duration"))
 		loop := c.Bool("loop")
+		footer := c.String("footer")
 
 		var actions []toast.Action
 		actionTexts := c.StringSlice("action")
 		actionTypes := c.StringSlice("action-type")
 		actionArgs := c.StringSlice("action-arg")
+		actionHintInputIds := c.StringSlice("hint-input-id")
 
 		for index, actionLabel := range actionTexts {
-			var actionType string = "protocol"
+			var actionType string
 			var actionArg string
+			var actionHintInputId string
 			if len(actionTypes) > index {
 				actionType = actionTypes[index]
 			}
 			if len(actionArgs) > index {
 				actionArg = actionArgs[index]
 			}
+			if len(actionHintInputIds) > index {
+				actionHintInputId = actionHintInputIds[index]
+			}
 			actions = append(actions, toast.Action{
-				Type:      actionType,
-				Label:     actionLabel,
-				Arguments: actionArg,
+				Type:        actionType,
+				Label:       actionLabel,
+				Arguments:   actionArg,
+				HintInputId: actionHintInputId,
 			})
 		}
 
 		notification := &toast.Notification{
-			AppID:               appID,
-			Title:               title,
-			Message:             message,
+			AppID:   appID,
+			Title:   title,
+			Message: message,
+			// Header:              toast.Header{},
+			Banner: banner,
+			Image:  image,
+			// ProgressBar:         toProgressBar{},
+			Attribution:         footer,
 			Icon:                icon,
-			Actions:             actions,
 			ActivationType:      activationType,
+			Scenario:            "",
 			ActivationArguments: activationArg,
-			Audio:               audio,
-			Loop:                loop,
-			Duration:            duration,
+			Actions:             actions,
+			// Input:               Input{},
+			Audio:    audio,
+			Loop:     loop,
+			Duration: duration,
 		}
 
 		if err := notification.Push(); err != nil {
@@ -129,5 +165,5 @@ func main() {
 		return nil
 	}
 
-	app.Run(os.Args)
+	_ = app.Run(os.Args)
 }
